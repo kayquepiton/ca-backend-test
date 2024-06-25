@@ -1,0 +1,76 @@
+using AutoMapper;
+using Ca.Backend.Test.Application.Models.Request;
+using Ca.Backend.Test.Application.Models.Response;
+using Ca.Backend.Test.Application.Services.Interfaces;
+using Ca.Backend.Test.Domain.Entities;
+using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
+using FluentValidation;
+
+namespace Ca.Backend.Test.Application.Services;
+public class BillingServices : IBillingServices
+{
+    private readonly IGenericRepository<BillingEntity> _repository;
+    private readonly IMapper _mapper;
+    private readonly IValidator<BillingRequest> _billingRequestValidator;
+
+    public BillingServices(IGenericRepository<BillingEntity> repository, IMapper mapper,
+                            IValidator<BillingRequest> billingRequestValidator)
+    {
+        _repository = repository;
+        _mapper = mapper;
+        _billingRequestValidator = billingRequestValidator;
+    }
+
+    public async Task<BillingResponse> CreateAsync(BillingRequest billingRequest)
+    {
+        var validationResult = await _billingRequestValidator.ValidateAsync(billingRequest);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var billingEntity = _mapper.Map<BillingEntity>(billingRequest);
+        billingEntity = await _repository.CreateAsync(billingEntity);
+        return _mapper.Map<BillingResponse>(billingEntity);
+    }
+
+    public async Task<BillingResponse> GetByIdAsync(Guid id)
+    {
+        var billingEntity = await _repository.GetByIdAsync(id);
+
+        if (billingEntity is null)
+            throw new ApplicationException($"Billing with ID {id} not found.");
+
+        return _mapper.Map<BillingResponse>(billingEntity);
+    }
+
+    public async Task<IEnumerable<BillingResponse>> GetAllAsync()
+    {
+        var billingEntities = await _repository.GetAllAsync();
+        return _mapper.Map<IEnumerable<BillingResponse>>(billingEntities);
+    }
+
+    public async Task<BillingResponse> UpdateAsync(Guid id, BillingRequest billingRequest)
+    {
+        var validationResult = await _billingRequestValidator.ValidateAsync(billingRequest);
+        if (!validationResult.IsValid)
+            throw new ValidationException(validationResult.Errors);
+
+        var billingEntity = await _repository.GetByIdAsync(id);
+        if (billingEntity is null)
+            throw new ApplicationException($"Billing with ID {id} not found.");
+
+        _mapper.Map(billingRequest, billingEntity);
+        billingEntity = await _repository.UpdateAsync(billingEntity);
+        return _mapper.Map<BillingResponse>(billingEntity);
+    }
+
+    public async Task DeleteByIdAsync(Guid id)
+    {
+        var billingEntity = await _repository.GetByIdAsync(id);
+
+        if (billingEntity is null)
+            throw new ApplicationException($"Billing with ID {id} not found.");
+
+        await _repository.DeleteByIdAsync(id);
+    }
+}
+
