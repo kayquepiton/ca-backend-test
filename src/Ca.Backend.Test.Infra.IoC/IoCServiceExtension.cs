@@ -1,10 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Ca.Backend.Test.Application.Mappings;
+using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Services;
 using Ca.Backend.Test.Application.Services.Interfaces;
+using Ca.Backend.Test.Application.Validators;
 using Ca.Backend.Test.Domain.Entities;
 using Ca.Backend.Test.Infra.Data;
 using Ca.Backend.Test.Infra.Data.Repository;
 using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +27,11 @@ public static class IoCServiceExtension
         
         services.AddScoped<ICustomerServices, CustomerServices>();
         services.AddScoped<IProductServices, ProductServices>();
+
+        services.AddScoped<IValidator<ProductRequest>, ProductRequestValidator>();
+        services.AddScoped<IValidator<CustomerRequest>, CustomerRequestValidator>();
+        services.AddScoped<IValidator<BillingRequest>, BillingRequestValidator>();
+        //services.AddScoped<IValidator<BillingLineRequest>, BillingLineRequestValidator>();
 
     }
 

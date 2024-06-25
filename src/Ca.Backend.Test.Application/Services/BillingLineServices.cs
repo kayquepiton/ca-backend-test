@@ -1,3 +1,4 @@
+using AutoMapper;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Models.Response;
 using Ca.Backend.Test.Application.Services.Interfaces;
@@ -8,101 +9,58 @@ namespace Ca.Backend.Test.Application.Services;
 public class BillingLineServices : IBillingLineServices
 {
     private readonly IGenericRepository<BillingLineEntity> _repository;
+    private readonly IMapper _mapper;
 
-    public BillingLineServices(IGenericRepository<BillingLineEntity> repository)
+    public BillingLineServices(IGenericRepository<BillingLineEntity> repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
+
     public async Task<BillingLineResponse> CreateAsync(BillingLineRequest billingLineRequest)
     {
-        var billingLineEntity = new BillingLineEntity
-        {
-            Description = billingLineRequest.Description,
-            Quantity = billingLineRequest.Quantity,
-            UnitPrice = billingLineRequest.UnitPrice,
-            Subtotal = billingLineRequest.Subtotal
-        };
+        var billingLineEntity = _mapper.Map<BillingLineEntity>(billingLineRequest);
 
         billingLineEntity = await _repository.CreateAsync(billingLineEntity);
 
-        return new BillingLineResponse()
-        {
-            Id = billingLineEntity.Id,
-            Description = billingLineEntity.Description,
-            Quantity = billingLineEntity.Quantity,
-            UnitPrice = billingLineEntity.UnitPrice,
-            Subtotal = billingLineEntity.Subtotal
-        };
+        return _mapper.Map<BillingLineResponse>(billingLineEntity);
     }
 
     public async Task<BillingLineResponse> GetByIdAsync(Guid id)
     {
         var billingLineEntity = await _repository.GetByIdAsync(id);
 
-        if(billingLineEntity is null)
+        if (billingLineEntity is null)
             throw new ApplicationException($"Billing Line with ID {id} not found.");
 
-        return new BillingLineResponse()
-        {
-            Id = billingLineEntity.Id,
-            Description = billingLineEntity.Description,
-            Quantity = billingLineEntity.Quantity,
-            UnitPrice = billingLineEntity.UnitPrice,
-            Subtotal = billingLineEntity.Subtotal
-        };
+        return _mapper.Map<BillingLineResponse>(billingLineEntity);
     }
 
     public async Task<IEnumerable<BillingLineResponse>> GetAllAsync()
     {
         var billingLineEntities = await _repository.GetAllAsync();
 
-        var billingLineResponses = new List<BillingLineResponse>();
-
-        foreach(var billingLineEntity in billingLineEntities)
-        {
-            billingLineResponses.Add(new BillingLineResponse()
-            {
-                Id = billingLineEntity.Id,
-                Description = billingLineEntity.Description,
-                Quantity = billingLineEntity.Quantity,
-                UnitPrice = billingLineEntity.UnitPrice,
-                Subtotal = billingLineEntity.Subtotal
-            });
-        };
-
-        return billingLineResponses;
+        return _mapper.Map<IEnumerable<BillingLineResponse>>(billingLineEntities);
     }
 
     public async Task<BillingLineResponse> UpdateAsync(Guid id, BillingLineRequest billingLineRequest)
     {
-        var billingLineEntity = new BillingLineEntity
-        {
-            Id = id,
-            Description = billingLineRequest.Description,
-            Quantity = billingLineRequest.Quantity,
-            UnitPrice = billingLineRequest.UnitPrice,
-            Subtotal = billingLineRequest.Subtotal
-        };
+        var billingLineEntity = _mapper.Map<BillingLineEntity>(billingLineRequest);
+        billingLineEntity.Id = id;
 
         billingLineEntity = await _repository.UpdateAsync(billingLineEntity);
 
-        return new BillingLineResponse()
-        {
-            Id = billingLineEntity.Id,
-            Description = billingLineEntity.Description,
-            Quantity = billingLineEntity.Quantity,
-            UnitPrice = billingLineEntity.UnitPrice,
-            Subtotal = billingLineEntity.Subtotal
-        };
+        return _mapper.Map<BillingLineResponse>(billingLineEntity);
     }
 
     public async Task DeleteByIdAsync(Guid id)
     {
         var billingLineEntity = await _repository.GetByIdAsync(id);
 
-        if(billingLineEntity is null)
+        if (billingLineEntity is null)
             throw new ApplicationException($"Billing Line with ID {id} not found.");
-        
+
         await _repository.DeleteByIdAsync(id);
     }
 }
+
