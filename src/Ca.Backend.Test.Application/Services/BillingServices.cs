@@ -2,6 +2,7 @@ using System.Text.Json;
 using AutoMapper;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Models.Response;
+using Ca.Backend.Test.Application.Models.Responses;
 using Ca.Backend.Test.Application.Services.Interfaces;
 using Ca.Backend.Test.Domain.Entities;
 using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
@@ -40,7 +41,7 @@ public class BillingServices : IBillingServices
             response.EnsureSuccessStatusCode();
 
             var responseContent = await response.Content.ReadAsStringAsync();
-            var billingData = JsonSerializer.Deserialize<List<BillingRequest>>(responseContent);
+            var billingData = JsonSerializer.Deserialize<List<BillingApiResponse>>(responseContent);
 
             if (billingData is null || !billingData.Any())
                 throw new ApplicationException("No billing data found in the API.");
@@ -48,19 +49,19 @@ public class BillingServices : IBillingServices
             var firstBilling = billingData.First();
 
             // Validate customer
-            var customerEntity = await _customerRepository.GetByIdAsync(firstBilling.CustomerId);
+            var customerEntity = await _customerRepository.GetByIdAsync(Guid.Parse(firstBilling.Customer.Id));
             if (customerEntity is null)
-                throw new ApplicationException($"Customer with ID {firstBilling.CustomerId} not found.");
+                throw new ApplicationException($"Customer with ID {firstBilling.Customer.Id} not found.");
 
             // Validate products
             foreach (var line in firstBilling.Lines)
             {
-                var productEntity = await _productRepository.GetByIdAsync(line.ProductId);
+                var productEntity = await _productRepository.GetByIdAsync(Guid.Parse(line.ProductId));
                 if (productEntity is null)
                     throw new ApplicationException($"Product with ID {line.ProductId} not found.");
             }
 
-            // Map and save billing data
+            // Map and save billing data using AutoMapper
             var billingEntity = _mapper.Map<BillingEntity>(firstBilling);
             await _repository.CreateAsync(billingEntity);
         }
