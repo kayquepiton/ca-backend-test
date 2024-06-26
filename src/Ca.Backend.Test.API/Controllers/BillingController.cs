@@ -15,6 +15,14 @@ public class BillingController : ControllerBase
         _billingServices = billingServices;
     }
 
+    [HttpPost("importFromExternalApi")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> ImportBillingAsync()
+    {
+        await _billingServices.ImportBillingFromExternalApiAsync();
+        return Ok();
+    }
+
     [HttpPost]
     [ProducesResponseType(typeof(BillingResponse), StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateBillingAsync([FromBody] BillingRequest request)
@@ -57,4 +65,5 @@ public class BillingController : ControllerBase
         await _billingServices.DeleteByIdAsync(id);
         return Ok();
     }
+
 }

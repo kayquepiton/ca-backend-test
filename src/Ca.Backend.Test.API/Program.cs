@@ -22,6 +22,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.ConfigureAppDependencies(builder.Configuration);
 
+// Add HttpClient to the container
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
