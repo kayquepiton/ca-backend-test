@@ -21,12 +21,14 @@ public static class IoCServiceExtension
     {
         ConfigureDbContext(services, configuration);
         services.AddScoped<IGenericRepository<CustomerEntity>, GenericRepository<CustomerEntity>>();
+        services.AddScoped<IGenericRepository<CustomerEntity>, GenericRepository<CustomerEntity>>();
         services.AddScoped<IGenericRepository<ProductEntity>, GenericRepository<ProductEntity>>();
         services.AddScoped<IGenericRepository<BillingEntity>, GenericRepository<BillingEntity>>();
         services.AddScoped<IGenericRepository<BillingLineEntity>, GenericRepository<BillingLineEntity>>();
         
         services.AddScoped<ICustomerServices, CustomerServices>();
         services.AddScoped<IProductServices, ProductServices>();
+        services.AddScoped<IBillingServices, BillingServices>();
 
         services.AddScoped<IValidator<ProductRequest>, ProductRequestValidator>();
         services.AddScoped<IValidator<CustomerRequest>, CustomerRequestValidator>();

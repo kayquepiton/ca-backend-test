@@ -10,15 +10,21 @@ namespace Ca.Backend.Test.Application.Services;
 public class BillingServices : IBillingServices
 {
     private readonly IGenericRepository<BillingEntity> _repository;
+    private readonly IGenericRepository<CustomerEntity> _customerRepository;
+    private readonly IGenericRepository<ProductEntity> _productRepository;
     private readonly IMapper _mapper;
     private readonly IValidator<BillingRequest> _billingRequestValidator;
 
-    public BillingServices(IGenericRepository<BillingEntity> repository, IMapper mapper,
-                            IValidator<BillingRequest> billingRequestValidator)
+    public BillingServices(IGenericRepository<BillingEntity> repository,
+                            IGenericRepository<CustomerEntity> customerRepository,
+                            IMapper mapper, IValidator<BillingRequest> billingRequestValidator,
+                            IGenericRepository<ProductEntity> productRepository)
     {
         _repository = repository;
+        _customerRepository = customerRepository;
         _mapper = mapper;
         _billingRequestValidator = billingRequestValidator;
+        _productRepository = productRepository;
     }
 
     public async Task<BillingResponse> CreateAsync(BillingRequest billingRequest)
@@ -27,6 +33,17 @@ public class BillingServices : IBillingServices
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
+        var customerEntity = await _customerRepository.GetByIdAsync(billingRequest.CustomerId);
+        if (customerEntity is null)
+            throw new ApplicationException($"Customer with ID {billingRequest.CustomerId} not found.");
+
+        foreach(var line in billingRequest.Lines)
+        {
+            var productEntity = await _productRepository.GetByIdAsync(line.ProductId);
+            if(productEntity is null)
+                throw new ApplicationException($"Product with ID {line.ProductId} not found.");
+        }
+                
         var billingEntity = _mapper.Map<BillingEntity>(billingRequest);
         billingEntity = await _repository.CreateAsync(billingEntity);
         return _mapper.Map<BillingResponse>(billingEntity);
