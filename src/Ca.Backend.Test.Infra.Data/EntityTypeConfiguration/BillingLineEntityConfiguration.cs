@@ -19,7 +19,7 @@ public class BillingLineEntityConfiguration : IEntityTypeConfiguration<BillingLi
 
         builder.Property(bl => bl.ProductId)
             .IsRequired();
-
+        
         builder.Property(bl => bl.Quantity)
             .IsRequired();
 

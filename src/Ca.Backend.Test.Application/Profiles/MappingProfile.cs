@@ -19,6 +19,7 @@ public class MappingProfile : Profile
 
         CreateMap<BillingLineRequest, BillingLineEntity>();
         CreateMap<BillingLineEntity, BillingLineResponse>();
+                
     }
 }
 

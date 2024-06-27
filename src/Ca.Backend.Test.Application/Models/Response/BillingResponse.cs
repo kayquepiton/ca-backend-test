@@ -7,5 +7,6 @@ public class BillingResponse
     public DateTime DueDate { get; set; }
     public decimal TotalAmount { get; set; }
     public string Currency { get; set; }
+    public List<BillingLineResponse> Lines { get; set; }
 }
 

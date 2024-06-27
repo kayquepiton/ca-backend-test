@@ -2,7 +2,7 @@ using System.Text.Json;
 using AutoMapper;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Models.Response;
-using Ca.Backend.Test.Application.Models.Responses;
+using Ca.Backend.Test.Application.Models.Responses.Api;
 using Ca.Backend.Test.Application.Services.Interfaces;
 using Ca.Backend.Test.Domain.Entities;
 using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
@@ -31,7 +31,7 @@ public class BillingServices : IBillingServices
         _productRepository = productRepository;
         _httpClient = httpClient;
     }
-
+    
     public async Task ImportBillingFromExternalApiAsync()
     {
         try
