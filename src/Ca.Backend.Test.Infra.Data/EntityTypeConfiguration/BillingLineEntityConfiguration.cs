@@ -20,10 +20,6 @@ public class BillingLineEntityConfiguration : IEntityTypeConfiguration<BillingLi
         builder.Property(bl => bl.ProductId)
             .IsRequired();
 
-        builder.Property(bl => bl.Description)
-            .IsRequired()
-            .HasMaxLength(255);
-
         builder.Property(bl => bl.Quantity)
             .IsRequired();
 
