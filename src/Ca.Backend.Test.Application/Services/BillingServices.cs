@@ -34,50 +34,42 @@ public class BillingServices : IBillingServices
     
     public async Task ImportBillingFromExternalApiAsync()
     {
-        try
-        {
-            // Fetch billing data from external API
-            var response = await _httpClient.GetAsync("https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing");
-            response.EnsureSuccessStatusCode();
+        var billingData = await RequestExternalBillings();
+        
+        var firstBilling = billingData.First();
 
-            var responseContent = await response.Content.ReadAsStringAsync();
-            var billingData = JsonSerializer.Deserialize<List<BillingApiResponse>>(responseContent);
+        // Validate customer
+        await VerifyCustomerExistsAsync(firstBilling.Customer.Id);
 
-            if (billingData is null || !billingData.Any())
-                throw new ApplicationException("No billing data found in the API.");
-
-            var firstBilling = billingData.First();
-
-            // Validate customer
-            var customerEntity = await _customerRepository.GetByIdAsync(firstBilling.Customer.Id);
-            if (customerEntity is null)
-                throw new ApplicationException($"Customer with ID {firstBilling.Customer.Id} not found.");
-
-            // Validate products
-            foreach (var line in firstBilling.Lines)
-            {
-                var productEntity = await _productRepository.GetByIdAsync(Guid.Parse(line.ProductId));
-                if (productEntity is null)
-                    throw new ApplicationException($"Product with ID {line.ProductId} not found.");
-            }
-
-            // Map and save billing data using AutoMapper
-            var billingEntity = _mapper.Map<BillingEntity>(firstBilling);
-            await _repository.CreateAsync(billingEntity);
-        }
-        catch (HttpRequestException ex)
-        {
-            throw new ApplicationException("Error fetching data from external API.", ex);
-        }
-        catch (JsonException ex)
-        {
-            throw new ApplicationException("Error deserializing data from external API.", ex);
-        }
-        catch (Exception ex)
-        {
-            throw new ApplicationException("An error occurred while importing billing data.", ex);
-        }
+        // Validate products
+        await VerifyProductsExistsAsync(firstBilling.Lines.Select(l => l.ProductId));
+        
+        // Map and save billing data using AutoMapper
+        var billingEntity = _mapper.Map<BillingEntity>(firstBilling);
+        await _repository.CreateAsync(billingEntity);
     }
+
+    private async Task<IList<BillingApiResponse>> RequestExternalBillings()
+    {
+        // Fetch billing data from external API
+        var httpRequestMessage = new HttpRequestMessage
+        {
+            RequestUri = new Uri("https://65c3b12439055e7482c16bca.mockapi.io/api/v1/billing"),
+            Method = HttpMethod.Get
+        };
+        
+        var response = await _httpClient.SendAsync(httpRequestMessage, new CancellationToken());
+        response.EnsureSuccessStatusCode();
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        var billingData = JsonSerializer.Deserialize<List<BillingApiResponse>>(responseContent);
+
+        if (billingData is null || !billingData.Any())
+            throw new ApplicationException("No billing data found in the API.");
+
+        return billingData;
+    }
+
 
     public async Task<BillingResponse> CreateAsync(BillingRequest billingRequest)
     {
@@ -85,20 +77,30 @@ public class BillingServices : IBillingServices
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
 
-        var customerEntity = await _customerRepository.GetByIdAsync(billingRequest.CustomerId);
-        if (customerEntity is null)
-            throw new ApplicationException($"Customer with ID {billingRequest.CustomerId} not found.");
+        await VerifyCustomerExistsAsync(billingRequest.CustomerId);
 
-        foreach(var line in billingRequest.Lines)
-        {
-            var productEntity = await _productRepository.GetByIdAsync(line.ProductId);
-            if(productEntity is null)
-                throw new ApplicationException($"Product with ID {line.ProductId} not found.");
-        }
-                
+        await VerifyProductsExistsAsync(billingRequest.Lines.Select(l => l.ProductId));
+
         var billingEntity = _mapper.Map<BillingEntity>(billingRequest);
         billingEntity = await _repository.CreateAsync(billingEntity);
         return _mapper.Map<BillingResponse>(billingEntity);
+    }
+
+    private async Task VerifyProductsExistsAsync(IEnumerable<Guid> productIds)
+    {
+        foreach(var id in productIds)
+        {
+            var productEntity = await _productRepository.GetByIdAsync(id);
+            if(productEntity is null)
+                throw new ApplicationException($"Product with ID {id} not found.");
+        }
+    }
+
+    private async Task VerifyCustomerExistsAsync(Guid id)
+    {
+        var customerEntity = await _customerRepository.GetByIdAsync(id);
+        if (customerEntity is null)
+            throw new ApplicationException($"Customer with ID {id} not found.");
     }
 
     public async Task<BillingResponse> GetByIdAsync(Guid id)

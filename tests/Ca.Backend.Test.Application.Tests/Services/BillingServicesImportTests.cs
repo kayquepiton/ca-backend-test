@@ -56,7 +56,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
             );
         }
 
-        /*[Test]
+        [Test]
         public async Task ImportBillingFromExternalApiAsync_ValidApiResponse_ImportsBillingSuccessfully()
         {
             // Arrange
@@ -65,7 +65,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 InvoiceNumber = "INV-001",
                 Customer = new CustomerApiResponse
                 {
-                    Id = Guid.NewGuid().ToString(), // Simulating a valid GUID here
+                    Id = Guid.NewGuid(), // Simulating a valid GUID here
                     Name = "John Doe",
                     Email = "john.doe@example.com",
                     Address = "123 Main St"
@@ -78,7 +78,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 {
                     new LineApiResponse
                     {
-                        ProductId = Guid.NewGuid().ToString(), // Simulating a valid GUID here
+                        ProductId = Guid.NewGuid(), // Simulating a valid GUID here
                         Description = "Test Product",
                         Quantity = 1,
                         UnitPrice = 100,
@@ -100,11 +100,11 @@ namespace Ca.Backend.Test.Application.Tests.Services
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(httpResponseMessage);
 
-            var customerEntity = new CustomerEntity { Id = Guid.Parse(billingApiResponse.Customer.Id) };
+            var customerEntity = new CustomerEntity { Id = billingApiResponse.Customer.Id};
             _mockCustomerRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                                    .ReturnsAsync(customerEntity);
 
-            var productEntity = new ProductEntity { Id = Guid.Parse(billingApiResponse.Lines[0].ProductId), Description = "Test Product" };
+            var productEntity = new ProductEntity { Id = billingApiResponse.Lines[0].ProductId, Description = "Test Product" };
             _mockProductRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                                   .ReturnsAsync(productEntity);
 
@@ -116,7 +116,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
 
             // Assert
             _mockRepository.Verify(r => r.CreateAsync(It.IsAny<BillingEntity>()), Times.Once);
-        }*/
+        }
 
         [Test]
         public async Task ImportBillingFromExternalApiAsync_InvalidCustomer_ThrowsApplicationException()
@@ -140,7 +140,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 {
                     new LineApiResponse
                     {
-                        ProductId = "456",
+                        ProductId = Guid.NewGuid(),
                         Description = "Test Product",
                         Quantity = 1,
                         UnitPrice = 100,
@@ -175,7 +175,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
 
 
             
-        /*[Test]
+        [Test]
         public async Task ImportBillingFromExternalApiAsync_InvalidProduct_ThrowsApplicationException()
         {
             // Arrange
@@ -184,7 +184,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 InvoiceNumber = "INV-001",
                 Customer = new CustomerApiResponse
                 {
-                    Id = "1da9861b-0a5b-44a8-b04c-14c42c081add",
+                    Id = Guid.NewGuid(),
                     Name = "John Doe",
                     Email = "john.doe@example.com",
                     Address = "123 Main St"
@@ -197,7 +197,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 {
                     new LineApiResponse
                     {
-                        ProductId = "789", // Use an invalid product ID here
+                        ProductId = Guid.NewGuid(), // Use an invalid product ID here
                         Description = "Test Product",
                         Quantity = 1,
                         UnitPrice = 100,
@@ -219,7 +219,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                     It.IsAny<CancellationToken>()))
                 .ReturnsAsync(httpResponseMessage);
 
-            var customerEntity = new CustomerEntity { Id = Guid.Parse(billingApiResponse.Customer.Id) };
+            var customerEntity = new CustomerEntity { Id = billingApiResponse.Customer.Id};
             _mockCustomerRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>()))
                                    .ReturnsAsync(customerEntity);
 
@@ -232,6 +232,6 @@ namespace Ca.Backend.Test.Application.Tests.Services
             // Assert
             await action.Should().ThrowAsync<ApplicationException>()
                         .WithMessage($"Product with ID {billingApiResponse.Lines[0].ProductId} not found.");
-        }*/
+        }
     }
 }

@@ -44,7 +44,7 @@ public class BillingControllerTests
             DueDate = DateTime.UtcNow.AddDays(30),
             TotalAmount = 1000.00m,
             Currency = "USD",
-            Lines = new List<BillingLineRequest> { new BillingLineRequest() } // Supondo que BillingLineRequest é definido corretamente
+            Lines = new List<BillingLineRequest> { new BillingLineRequest() } 
         };
         var response = new BillingResponse 
         { 
@@ -54,7 +54,7 @@ public class BillingControllerTests
             DueDate = request.DueDate,
             TotalAmount = request.TotalAmount,
             Currency = request.Currency,
-            Lines = new List<BillingLineResponse> { new BillingLineResponse() } // Supondo que BillingLineResponse é definido corretamente
+            Lines = new List<BillingLineResponse> { new BillingLineResponse() } 
         };
         _mockBillingServices.Setup(s => s.CreateAsync(request)).ReturnsAsync(response);
 
@@ -86,7 +86,7 @@ public class BillingControllerTests
             DueDate = DateTime.UtcNow.AddDays(30),
             TotalAmount = 2000.00m,
             Currency = "EUR",
-            Lines = new List<BillingLineResponse> { new BillingLineResponse() } // Supondo que BillingLineResponse é definido corretamente
+            Lines = new List<BillingLineResponse> { new BillingLineResponse() } 
         };
         _mockBillingServices.Setup(s => s.GetByIdAsync(billingId)).ReturnsAsync(response);
 
@@ -156,7 +156,7 @@ public class BillingControllerTests
             DueDate = DateTime.UtcNow.AddDays(30),
             TotalAmount = 5000.00m,
             Currency = "CAD",
-            Lines = new List<BillingLineRequest> { new BillingLineRequest() } // Supondo que BillingLineRequest é definido corretamente
+            Lines = new List<BillingLineRequest> { new BillingLineRequest() } 
         };
         var response = new BillingResponse 
         { 
@@ -166,7 +166,7 @@ public class BillingControllerTests
             DueDate = request.DueDate,
             TotalAmount = request.TotalAmount,
             Currency = request.Currency,
-            Lines = new List<BillingLineResponse> { new BillingLineResponse() } // Supondo que BillingLineResponse é definido corretamente
+            Lines = new List<BillingLineResponse> { new BillingLineResponse() } 
         };
         _mockBillingServices.Setup(s => s.UpdateAsync(billingId, request)).ReturnsAsync(response);
 
