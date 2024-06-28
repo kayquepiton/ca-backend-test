@@ -4,7 +4,7 @@ namespace Ca.Backend.Test.Application.Models.Responses.Api;
 public class CustomerApiResponse
 {
     [JsonPropertyName("id")]
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 
     [JsonPropertyName("name")]
     public string Name { get; set; }

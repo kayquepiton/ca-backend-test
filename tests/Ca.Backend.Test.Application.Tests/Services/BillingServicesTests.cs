@@ -97,7 +97,6 @@ public class BillingServicesTests
                 {
                     Id = Guid.NewGuid(),
                     ProductId = productId,
-                    Description = productEntity.Description,
                     Quantity = billingRequest.Lines[0].Quantity,
                     UnitPrice = billingRequest.Lines[0].UnitPrice,
                     Subtotal = billingRequest.Lines[0].Subtotal
@@ -121,7 +120,6 @@ public class BillingServicesTests
         result.Lines[0].Quantity.Should().Be(1); 
         result.Lines[0].UnitPrice.Should().Be(100); 
         result.Lines[0].Subtotal.Should().Be(100); 
-        result.Lines[0].Description.Should().Be(productEntity.Description); 
     }
 
     [Test]
@@ -167,7 +165,6 @@ public class BillingServicesTests
                 {
                     Id = Guid.NewGuid(),
                     ProductId = productId,
-                    Description = productRequest.Description,
                     Quantity = 1,
                     UnitPrice = 100,
                     Subtotal = 100
@@ -187,7 +184,6 @@ public class BillingServicesTests
         result.TotalAmount.Should().Be(existingBillingEntity.TotalAmount);
         result.Currency.Should().Be(existingBillingEntity.Currency);
         result.Lines.Should().HaveCount(1);
-        result.Lines[0].Description.Should().Be(productRequest.Description);
     }
 
     [Test]
@@ -290,7 +286,6 @@ public class BillingServicesTests
                 {
                     Id = Guid.NewGuid(),
                     ProductId = productId,
-                    Description = "Old Product",
                     Quantity = 1,
                     UnitPrice = 100,
                     Subtotal = 100
@@ -315,7 +310,6 @@ public class BillingServicesTests
                 {
                     Id = Guid.NewGuid(),
                     ProductId = productId,
-                    Description = productRequest.Description,
                     Quantity = billingRequest.Lines[0].Quantity,
                     UnitPrice = billingRequest.Lines[0].UnitPrice,
                     Subtotal = billingRequest.Lines[0].Subtotal
@@ -335,7 +329,6 @@ public class BillingServicesTests
         result.TotalAmount.Should().Be(billingRequest.TotalAmount);
         result.Currency.Should().Be(billingRequest.Currency);
         result.Lines.Should().HaveCount(1);
-        result.Lines[0].Description.Should().Be(productRequest.Description);
     }
 
     [Test]

@@ -49,7 +49,7 @@ public class BillingServices : IBillingServices
             var firstBilling = billingData.First();
 
             // Validate customer
-            var customerEntity = await _customerRepository.GetByIdAsync(Guid.Parse(firstBilling.Customer.Id));
+            var customerEntity = await _customerRepository.GetByIdAsync(firstBilling.Customer.Id);
             if (customerEntity is null)
                 throw new ApplicationException($"Customer with ID {firstBilling.Customer.Id} not found.");
 
