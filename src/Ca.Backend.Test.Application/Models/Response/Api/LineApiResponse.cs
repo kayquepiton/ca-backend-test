@@ -1,10 +1,10 @@
 using System.Text.Json.Serialization;
 
-namespace Ca.Backend.Test.Application.Models.Responses;
+namespace Ca.Backend.Test.Application.Models.Responses.Api;
 public class LineApiResponse
 {
     [JsonPropertyName("productId")]
-    public string ProductId { get; set; }
+    public Guid ProductId { get; set; }
 
     [JsonPropertyName("description")]
     public string Description { get; set; }
