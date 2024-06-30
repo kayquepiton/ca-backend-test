@@ -73,7 +73,7 @@ public class CustomerServicesTests
     public async Task CreateAsync_InvalidCustomerRequest_ThrowsValidationException()
     {
         // Arrange
-        var customerRequest = new CustomerRequest(); // Invalid because required fields are not set
+        var customerRequest = new CustomerRequest(); 
 
         var validationResult = new FluentValidation.Results.ValidationResult();
         validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("Name", "Name is required"));

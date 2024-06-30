@@ -1,3 +1,4 @@
+using Ca.Backend.Test.API.Middlewares;
 using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Infra.IoC;
 using FluentValidation;
@@ -33,6 +34,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Adicione o middleware de exceção personalizado
+app.UseMiddleware<ExceptionMiddleware>();
+
+// Adicione outros middlewares aqui, se necessário
+app.UseRouting();
 
 app.UseHttpsRedirection();
 
