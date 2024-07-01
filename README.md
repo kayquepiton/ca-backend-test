@@ -9,16 +9,17 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 **Funcionalidades 🛠️**
 
 * Customer: Operações **CRUD** completas para clientes.
-* Campos obrigatórios:
+
   * Id
   * Name
   * Email
   * Address
+(Todos os campos obrigatórios)
 
 * Product: Operações **CRUD** completas para produtos.
-* Campos obrigatórios:
   * Id
   * Description
+(Todos os campos obrigatórios)
 
 * Billing
    * Importação de dados de faturamento de uma API externa.
