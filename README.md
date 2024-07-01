@@ -121,7 +121,7 @@
    * Melhorar cobertura de teste.
 
 
-**Contato: 🛠️**
-   **Kayque Almeida Piton**
-   **Email:** [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
-   **LinkedIn:** [Kayque Almeida Piton](https://www.linkedin.com/in/kayquepiton/)
+**Contato 🛠️**
+   * Kayque Almeida Piton
+   * Email: [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
+   * LinkedIn: [Kayque Almeida Piton](https://www.linkedin.com/in/kayquepiton/)
