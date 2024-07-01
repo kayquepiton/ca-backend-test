@@ -1,7 +1,6 @@
-using System.Diagnostics;
 using System.Net.Mime;
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using Ca.Backend.Test.API.Models.Response.Api;
 using FluentValidation;
 
 namespace Ca.Backend.Test.API.Middlewares;
@@ -24,7 +23,7 @@ public class ExceptionMiddleware
         }
         catch (ValidationException e)
         {
-            var response = new GenericHttpResponse
+            var response = new GenericHttpResponse<object>
             {
                 Errors = e.Errors.Select(error => error.ErrorMessage),
                 StatusCode = StatusCodes.Status400BadRequest,
@@ -34,12 +33,24 @@ public class ExceptionMiddleware
             _logger.LogWarning("Validation exception occurred: {Errors}", response.Errors);
             await BuildResponseAsync(context, response.StatusCode, JsonSerializer.Serialize(response), MediaTypeNames.Application.Json);
         }
+        catch (HttpRequestException ex)
+        {
+            var response = new GenericHttpResponse<object>
+            {
+                Errors = new[] { "The service is temporarily unavailable. Please try again later." },
+                StatusCode = StatusCodes.Status400BadRequest,
+                Data = null
+            };
+
+            _logger.LogError(ex, "HTTP request exception occurred: The service is temporarily unavailable. Please try again later.");
+            await BuildResponseAsync(context, response.StatusCode, JsonSerializer.Serialize(response), MediaTypeNames.Application.Json);
+        }
         catch (ApplicationException ex)
         {
-            var response = new GenericHttpResponse
+            var response = new GenericHttpResponse<object>
             {
                 Errors = new[] { ex.Message },
-                StatusCode = StatusCodes.Status500InternalServerError,
+                StatusCode = StatusCodes.Status400BadRequest,
                 Data = null
             };
 
@@ -48,7 +59,7 @@ public class ExceptionMiddleware
         }
         catch (Exception ex)
         {
-            var response = new GenericHttpResponse
+            var response = new GenericHttpResponse<object>
             {
                 Errors = new[] { "An unexpected error occurred." },
                 StatusCode = StatusCodes.Status500InternalServerError,
@@ -68,48 +79,4 @@ public class ExceptionMiddleware
         await context.Response.WriteAsync(body);
     }
 }
-
-public class GenericHttpResponse<T>
-{
-    [JsonPropertyName("trace_id")]
-    public string? TraceId { get; set; }
-
-    [JsonIgnore]
-    public int StatusCode { get; set; }
-
-    [JsonPropertyName("data")]
-    public T? Data { get; set; }
-
-    [JsonPropertyName("errors")]
-    public IEnumerable<string> Errors { get; set; }
-
-    public GenericHttpResponse()
-    {
-        TraceId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
-        Errors = Enumerable.Empty<string>();
-    }
-}
-
-public class GenericHttpResponse
-{
-    [JsonPropertyName("trace_id")]
-    public string? TraceId { get; set; }
-
-    [JsonIgnore]
-    public int StatusCode { get; set; }
-
-    [JsonPropertyName("data")]
-    public object? Data { get; set; }
-
-    [JsonPropertyName("errors")]
-    public IEnumerable<string> Errors { get; set; }
-
-    public GenericHttpResponse()
-    {
-        TraceId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
-        Errors = Enumerable.Empty<string>();
-    }
-}
-
-
 

@@ -1,3 +1,4 @@
+using Ca.Backend.Test.API.Models.Response.Api;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Models.Response;
 using Ca.Backend.Test.Application.Services.Interfaces;
@@ -16,46 +17,60 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateProductAsync([FromBody] ProductRequest request)
     {
         var response = await _productServices.CreateAsync(request);
-        return Ok(response);
+        return Ok(new GenericHttpResponse<ProductResponse>
+        {
+            Data = response
+        });
     }
 
     [HttpGet("{id}")]
-    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(GenericHttpResponse<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetProductByIdAsync(Guid id)
     {
         var response = await _productServices.GetByIdAsync(id);
-        return Ok(response);
+        return Ok(new GenericHttpResponse<ProductResponse>
+        {
+            Data = response
+        });
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(IEnumerable<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<IEnumerable<ProductResponse>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllProductsAsync()
     {
         var response = await _productServices.GetAllAsync();
-        return Ok(response);
+        return Ok(new GenericHttpResponse<IEnumerable<ProductResponse>>
+        {
+            Data = response
+        });
     }
 
     [HttpPut("{id}")]
-    [ProducesResponseType(typeof(ProductResponse), StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(GenericHttpResponse<ProductResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(GenericHttpResponse<>), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> UpdateProductAsync(Guid id, [FromBody] ProductRequest request)
     {
         var response = await _productServices.UpdateAsync(id, request);
-        return Ok(response);
+        return Ok(new GenericHttpResponse<ProductResponse>
+        {
+            Data = response
+        });
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteProductAsync(Guid id)
     {
         await _productServices.DeleteByIdAsync(id);
-        return Ok();
+        return NoContent();
     }
 }
 
