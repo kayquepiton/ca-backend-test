@@ -1,9 +1,6 @@
 **API para Gerenciamento de Faturamento de Clientes**
-
 ---------------------
-
 Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamento de clientes. Inclui operações CRUD para clientes e produtos, bem como a importação e gerenciamento de faturas de uma API externa.
-
 ---------------------
 
 **Funcionalidades 🛠️**
@@ -14,12 +11,12 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
   * Name
   * Email
   * Address
-(Todos os campos obrigatórios)
+  * **Todos os campos são de preenchimento obrigatório.**
 
 * Product: Operações **CRUD** completas para produtos.
   * Id
   * Description
-(Todos os campos obrigatórios)
+  * **Todos os campos são de preenchimento obrigatório.**
 
 * Billing
    * Importação de dados de faturamento de uma API externa.
