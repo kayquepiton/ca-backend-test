@@ -65,7 +65,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 InvoiceNumber = "INV-001",
                 Customer = new CustomerApiResponse
                 {
-                    Id = Guid.NewGuid(), // Simulating a valid GUID here
+                    Id = Guid.NewGuid(), 
                     Name = "John Doe",
                     Email = "john.doe@example.com",
                     Address = "123 Main St"
@@ -78,7 +78,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 {
                     new LineApiResponse
                     {
-                        ProductId = Guid.NewGuid(), // Simulating a valid GUID here
+                        ProductId = Guid.NewGuid(), 
                         Description = "Test Product",
                         Quantity = 1,
                         UnitPrice = 100,
@@ -127,7 +127,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 InvoiceNumber = "INV-001",
                 Customer = new CustomerApiResponse
                 {
-                    Id = Guid.NewGuid(), // Use um ID de cliente inválido aqui
+                    Id = Guid.NewGuid(), 
                     Name = "John Doe",
                     Email = "john.doe@example.com",
                     Address = "123 Main St"
@@ -197,7 +197,7 @@ namespace Ca.Backend.Test.Application.Tests.Services
                 {
                     new LineApiResponse
                     {
-                        ProductId = Guid.NewGuid(), // Use an invalid product ID here
+                        ProductId = Guid.NewGuid(), 
                         Description = "Test Product",
                         Quantity = 1,
                         UnitPrice = 100,

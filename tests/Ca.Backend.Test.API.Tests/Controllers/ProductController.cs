@@ -5,6 +5,7 @@ using Ca.Backend.Test.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using Ca.Backend.Test.API.Models.Response.Api;
 
 namespace Ca.Backend.Test.API.Tests;
 public class ProductControllerTests
@@ -31,7 +32,7 @@ public class ProductControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<ProductResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<ProductResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Description, returnValue.Description);
     }
@@ -49,7 +50,7 @@ public class ProductControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<ProductResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<ProductResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Description, returnValue.Description);
     }
@@ -70,7 +71,7 @@ public class ProductControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsAssignableFrom<IEnumerable<ProductResponse>>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<IEnumerable<ProductResponse>>>(okResult.Value).Data;
         Assert.Equal(2, returnValue.Count());
     }
 
@@ -88,13 +89,13 @@ public class ProductControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<ProductResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<ProductResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Description, returnValue.Description);
     }
 
     [Fact]
-    public async Task DeleteProductAsync_ReturnsOkResult()
+    public async Task DeleteProductAsync_ReturnsNoContent()
     {
         // Arrange
         var productId = Guid.NewGuid();
@@ -104,7 +105,7 @@ public class ProductControllerTests
         var result = await _controller.DeleteProductAsync(productId);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        Assert.IsType<NoContentResult>(result);
     }
 }
 

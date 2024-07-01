@@ -67,7 +67,7 @@ public class ProductServicesTests
     public async Task CreateAsync_InvalidProductRequest_ThrowsValidationException()
     {
         // Arrange
-        var productRequest = new ProductRequest(); // Invalid because required fields are not set
+        var productRequest = new ProductRequest(); 
 
         var validationResult = new FluentValidation.Results.ValidationResult();
         validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("Description", "Description is required"));
