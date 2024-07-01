@@ -6,26 +6,26 @@
 
 ## Funcionalidades
 
-##### Customer: Operações **CRUD** completas para clientes.
+#### Customer: Operações **CRUD** completas para clientes.
   * Id
   * Name
   * Email
   * Address
   * **Todos os campos são de preenchimento obrigatório.**
 
-##### Product: Operações **CRUD** completas para produtos.
+#### Product: Operações **CRUD** completas para produtos.
   * Id
   * Description
   * **Todos os campos são de preenchimento obrigatório.**
 
-##### Billing
+#### Billing
    * Importação de dados de faturamento de uma API externa.
    * Verificação e inserção de faturas no banco de dados local.
    * Tratamento de exceções para mau funcionamento ou interrupção do serviço da API externa.
 
 ## Tecnologias utilizadas
 
-##### Frameworks Principais
+#### Frameworks Principais
    * .NET 8.0
    * Entity Framework Core 8.0.4
    * MySQL com Pomelo.EntityFrameworkCore.MySql 8.0.2
@@ -34,13 +34,13 @@
    * Refit 7.1.1
    * Swagger com Swashbuckle.AspNetCore 6.4.0
 
-##### Bibliotecas de Apoio e Extensões
+#### Bibliotecas de Apoio e Extensões
    * Microsoft.AspNetCore.OpenApi 8.0.4
    * Microsoft.Extensions.Http 8.0.0
    * Microsoft.Extensions.Configuration.Abstractions 8.0.0
    * Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
 
-##### Ferramentas de Teste e Cobertura
+#### Ferramentas de Teste e Cobertura
    * coverlet.collector 6.0.2
    * coverlet.msbuild 6.0.2
    * FluentAssertions 6.12.0
@@ -93,21 +93,21 @@
 
 ## Endpoints da API
 
-##### Customers
+#### Customers
    * **GET** /api/customers
    * **GET** /api/customers/{id}
    * **POST** /api/customers
    * **PUT** /api/customers/{id}
    * **DELETE** /api/customers/{id}
 
-##### Products
+#### Products
    * **GET** /api/products
    * **GET** /api/products/{id}
    * **POST** /api/products
    * **PUT** /api/products/{id}
    * **DELETE** /api/products/{id}
 
-##### Billing
+#### Billing
    * **GET** /api/billing
    * **GET** /api/billing/{id}
    * **POST** /api/billing
@@ -115,7 +115,7 @@
    * **DELETE** /api/billing/{id}
    * **POST** /api/billing/import (Importação dos dados do faturamento (billing) para uma API externa)
 
-##### Futuras implementaçoes
+### Futuras implementações
    * Melhorar a documentação do swagger.
    * Aperfeiçoamento das práticas de modelagem do projeto.
    * Melhorar cobertura de teste.
