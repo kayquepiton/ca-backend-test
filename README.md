@@ -113,18 +113,18 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 * Billing
 
-* **GET** /api/billing
-* **GET** /api/billing/{id}
-* **POST** /api/billing
-* **PUT** /api/billing/{id}
-* **DELETE** /api/billing/{id}
-* **POST** /api/billing/import (Importação dos dados do faturamento (billing) para uma API externa)
+   * **GET** /api/billing
+   * **GET** /api/billing/{id}
+   * **POST** /api/billing
+   * **PUT** /api/billing/{id}
+   * **DELETE** /api/billing/{id}
+   * **POST** /api/billing/import (Importação dos dados do faturamento (billing) para uma API externa)
 
 * Futuras implementaçoes
 
-* Melhorar a documentação do swagger.
-* Aperfeiçoamento das práticas de modelagem do projeto.
-* Melhorar cobertura de teste.
+   * Melhorar a documentação do swagger.
+   * Aperfeiçoamento das práticas de modelagem do projeto.
+   * Melhorar cobertura de teste.
 
 
 * Contato
