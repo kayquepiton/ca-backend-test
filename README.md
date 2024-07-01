@@ -1,5 +1,3 @@
-<p align="center"><img src="https://user-images.githubusercontent.com/55323701/82506032-25bbd600-9ad5-11ea-8b5e-e7c699d385af.png" alt="drawing" width="150"/></p>
-
 # API para Gerenciamento de Faturamento de Clientes**
 
 ##### Por Kayque Almeida Piton
@@ -93,7 +91,7 @@
    - Abra seu navegador da web e digite o endereço local onde a aplicação está sendo executada
    `/swagger`, por exemplo: `https://localhost:{port}/swagger/index.html`.
 
-### Endpoints da API
+## Endpoints da API
 
 ##### Customers
    * **GET** /api/customers
