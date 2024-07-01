@@ -23,6 +23,8 @@
    * Verificação e inserção de faturas no banco de dados local.
    * Tratamento de exceções para mau funcionamento ou interrupção do serviço da API externa.
 
+**Tecnologias utilizadas 🛠️**
+
 * Frameworks Principais
    * .NET 8.0
    * Entity Framework Core 8.0.4
@@ -119,7 +121,7 @@
    * Melhorar cobertura de teste.
 
 
-**Contato**
-   **Kayque Almeida Piton**  
+**Contato: 🛠️**
+   **Kayque Almeida Piton**
    **Email:** [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
    **LinkedIn:** [Kayque Almeida Piton](https://www.linkedin.com/in/kayquepiton/)
