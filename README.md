@@ -1,4 +1,4 @@
-** API para Gerenciamento de Faturamento de Clientes
+**API para Gerenciamento de Faturamento de Clientes**
 
 ---------------------
 
@@ -6,9 +6,9 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 ---------------------
 
-** Funcionalidades
+**Funcionalidades 🛠️**
 
-** Customer
+* Customer
 * Operações **CRUD** completas para clientes.
 * Campos obrigatórios:
   * Id
@@ -16,46 +16,46 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
   * Email
   * Address
 
-** Product
+* Product
 * Operações **CRUD** completas para produtos.
 * Campos obrigatórios:
   * Id
   * Description
 
-** Billing
+* Billing
 * Importação de dados de faturamento de uma API externa.
 * Verificação e inserção de faturas no banco de dados local.
 * Tratamento de exceções para mau funcionamento ou interrupção do serviço da API externa.
 
-** Frameworks Principais
-* .NET 8.0
-* Entity Framework Core 8.0.4
-* MySQL com Pomelo.EntityFrameworkCore.MySql 8.0.2
-* AutoMapper 13.0.1
-* FluentValidation 8.2.1
-* Refit 7.1.1
-* Swagger com Swashbuckle.AspNetCore 6.4.0
+* Frameworks Principais
+   * .NET 8.0
+   * Entity Framework Core 8.0.4
+   * MySQL com Pomelo.EntityFrameworkCore.MySql 8.0.2
+   * AutoMapper 13.0.1
+   * FluentValidation 8.2.1
+   * Refit 7.1.1
+   * Swagger com Swashbuckle.AspNetCore 6.4.0
 
-** Bibliotecas de Apoio e Extensões
-* Microsoft.AspNetCore.OpenApi 8.0.4
-* Microsoft.Extensions.Http 8.0.0
-* Microsoft.Extensions.Configuration.Abstractions 8.0.0
-* Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
+* Bibliotecas de Apoio e Extensões
+   * Microsoft.AspNetCore.OpenApi 8.0.4
+   * Microsoft.Extensions.Http 8.0.0
+   * Microsoft.Extensions.Configuration.Abstractions 8.0.0
+   * Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
 
-** Ferramentas de Teste e Cobertura
-* coverlet.collector 6.0.2
-* coverlet.msbuild 6.0.2
-* FluentAssertions 6.12.0
-* Microsoft.AspNetCore.Mvc.Testing 8.0.6
-* Microsoft.NET.Test.Sdk 17.8.0
-* Moq 4.20.70
-* NSubstitute 5.1.0
-* NUnit 4.1.0
-* NUnit3TestAdapter 4.5.0
-* xunit 2.8.1
-* xunit.runner.visualstudio 2.8.0
+* Ferramentas de Teste e Cobertura
+   * coverlet.collector 6.0.2
+   * coverlet.msbuild 6.0.2
+   * FluentAssertions 6.12.0
+   * Microsoft.AspNetCore.Mvc.Testing 8.0.6
+   * Microsoft.NET.Test.Sdk 17.8.0
+   * Moq 4.20.70
+   * NSubstitute 5.1.0
+   * NUnit 4.1.0
+   * NUnit3TestAdapter 4.5.0
+   * xunit 2.8.1
+   * xunit.runner.visualstudio 2.8.0
 
-** Configuração do Projeto
+**Configuração do Projeto 🛠️**
 
 **1. Clone o repositório:**
    ```sh
@@ -95,23 +95,23 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 ** Endpoints da API
 
-** Customers
+* Customers
 
-* **GET** /api/customers
-* **GET** /api/customers/{id}
-* **POST** /api/customers
-* **PUT** /api/customers/{id}
-* **DELETE** /api/customers/{id}
+   * **GET** /api/customers
+   * **GET** /api/customers/{id}
+   * **POST** /api/customers
+   * **PUT** /api/customers/{id}
+   * **DELETE** /api/customers/{id}
 
-** Products
+* Products
 
-* **GET** /api/products
-* **GET** /api/products/{id}
-* **POST** /api/products
-* **PUT** /api/products/{id}
-* **DELETE** /api/products/{id}
+   * **GET** /api/products
+   * **GET** /api/products/{id}
+   * **POST** /api/products
+   * **PUT** /api/products/{id}
+   * **DELETE** /api/products/{id}
 
-** Billing
+* Billing
 
 * **GET** /api/billing
 * **GET** /api/billing/{id}
@@ -120,14 +120,14 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 * **DELETE** /api/billing/{id}
 * **POST** /api/billing/import (Importação dos dados do faturamento (billing) para uma API externa)
 
-** Futuras implementaçoes
+* Futuras implementaçoes
 
 * Melhorar a documentação do swagger.
 * Aperfeiçoamento das práticas de modelagem do projeto.
 * Melhorar cobertura de teste.
 
 
-** Contato
+* Contato
 
 **Kayque Almeida Piton**  
 **Email:** [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
