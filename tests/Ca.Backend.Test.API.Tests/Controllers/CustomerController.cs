@@ -5,9 +5,9 @@ using Ca.Backend.Test.API.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Xunit;
+using Ca.Backend.Test.API.Models.Response.Api;
 
 namespace Ca.Backend.Test.API.Tests;
-
 public class CustomerControllerTests
 {
     private readonly Mock<ICustomerServices> _mockCustomerServices;
@@ -23,18 +23,18 @@ public class CustomerControllerTests
     public async Task CreateCustomerAsync_ReturnsOkResult_WithCustomerResponse()
     {
         // Arrange
-        var request = new CustomerRequest 
-        { 
+        var request = new CustomerRequest
+        {
             Name = "John Doe",
             Email = "john.doe@example.com",
             Address = "123 Main St"
         };
-        var response = new CustomerResponse 
-        { 
-            Id = Guid.NewGuid(), 
-            Name = "John Doe", 
-            Email = "john.doe@example.com", 
-            Address = "123 Main St" 
+        var response = new CustomerResponse
+        {
+            Id = Guid.NewGuid(),
+            Name = "John Doe",
+            Email = "john.doe@example.com",
+            Address = "123 Main St"
         };
         _mockCustomerServices.Setup(s => s.CreateAsync(request)).ReturnsAsync(response);
 
@@ -43,7 +43,7 @@ public class CustomerControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<CustomerResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<CustomerResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Name, returnValue.Name);
         Assert.Equal(response.Email, returnValue.Email);
@@ -55,12 +55,12 @@ public class CustomerControllerTests
     {
         // Arrange
         var customerId = Guid.NewGuid();
-        var response = new CustomerResponse 
-        { 
-            Id = customerId, 
-            Name = "Jane Doe", 
-            Email = "jane.doe@example.com", 
-            Address = "456 Elm St" 
+        var response = new CustomerResponse
+        {
+            Id = customerId,
+            Name = "Jane Doe",
+            Email = "jane.doe@example.com",
+            Address = "456 Elm St"
         };
         _mockCustomerServices.Setup(s => s.GetByIdAsync(customerId)).ReturnsAsync(response);
 
@@ -69,7 +69,7 @@ public class CustomerControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<CustomerResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<CustomerResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Name, returnValue.Name);
         Assert.Equal(response.Email, returnValue.Email);
@@ -92,7 +92,7 @@ public class CustomerControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsAssignableFrom<IEnumerable<CustomerResponse>>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<IEnumerable<CustomerResponse>>>(okResult.Value).Data;
         Assert.Equal(2, returnValue.Count());
     }
 
@@ -101,18 +101,18 @@ public class CustomerControllerTests
     {
         // Arrange
         var customerId = Guid.NewGuid();
-        var request = new CustomerRequest 
-        { 
-            Name = "Updated Customer", 
-            Email = "updated.customer@example.com", 
-            Address = "123 Updated St" 
+        var request = new CustomerRequest
+        {
+            Name = "Updated Customer",
+            Email = "updated.customer@example.com",
+            Address = "123 Updated St"
         };
-        var response = new CustomerResponse 
-        { 
-            Id = customerId, 
-            Name = "Updated Customer", 
-            Email = "updated.customer@example.com", 
-            Address = "123 Updated St" 
+        var response = new CustomerResponse
+        {
+            Id = customerId,
+            Name = "Updated Customer",
+            Email = "updated.customer@example.com",
+            Address = "123 Updated St"
         };
         _mockCustomerServices.Setup(s => s.UpdateAsync(customerId, request)).ReturnsAsync(response);
 
@@ -121,7 +121,7 @@ public class CustomerControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<CustomerResponse>(okResult.Value);
+        var returnValue = Assert.IsType<GenericHttpResponse<CustomerResponse>>(okResult.Value).Data;
         Assert.Equal(response.Id, returnValue.Id);
         Assert.Equal(response.Name, returnValue.Name);
         Assert.Equal(response.Email, returnValue.Email);
@@ -129,7 +129,7 @@ public class CustomerControllerTests
     }
 
     [Fact]
-    public async Task DeleteCustomerAsync_ReturnsOkResult()
+    public async Task DeleteCustomerAsync_ReturnsNoContent()
     {
         // Arrange
         var customerId = Guid.NewGuid();
@@ -139,6 +139,7 @@ public class CustomerControllerTests
         var result = await _controller.DeleteCustomerAsync(customerId);
 
         // Assert
-        Assert.IsType<OkResult>(result);
+        Assert.IsType<NoContentResult>(result);
     }
 }
+
