@@ -8,24 +8,22 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 **Funcionalidades 🛠️**
 
-* Customer
-* Operações **CRUD** completas para clientes.
+* Customer: Operações **CRUD** completas para clientes.
 * Campos obrigatórios:
   * Id
   * Name
   * Email
   * Address
 
-* Product
-* Operações **CRUD** completas para produtos.
+* Product: Operações **CRUD** completas para produtos.
 * Campos obrigatórios:
   * Id
   * Description
 
 * Billing
-* Importação de dados de faturamento de uma API externa.
-* Verificação e inserção de faturas no banco de dados local.
-* Tratamento de exceções para mau funcionamento ou interrupção do serviço da API externa.
+   * Importação de dados de faturamento de uma API externa.
+   * Verificação e inserção de faturas no banco de dados local.
+   * Tratamento de exceções para mau funcionamento ou interrupção do serviço da API externa.
 
 * Frameworks Principais
    * .NET 8.0
@@ -93,10 +91,9 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
    - Abra seu navegador da web e digite o endereço local onde a aplicação está sendo executada
    `/swagger`, por exemplo: `https://localhost:{port}/swagger/index.html`.
 
-** Endpoints da API
+**Endpoints da API 🛠️**
 
 * Customers
-
    * **GET** /api/customers
    * **GET** /api/customers/{id}
    * **POST** /api/customers
@@ -104,7 +101,6 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
    * **DELETE** /api/customers/{id}
 
 * Products
-
    * **GET** /api/products
    * **GET** /api/products/{id}
    * **POST** /api/products
@@ -112,7 +108,6 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
    * **DELETE** /api/products/{id}
 
 * Billing
-
    * **GET** /api/billing
    * **GET** /api/billing/{id}
    * **POST** /api/billing
@@ -121,14 +116,12 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
    * **POST** /api/billing/import (Importação dos dados do faturamento (billing) para uma API externa)
 
 * Futuras implementaçoes
-
    * Melhorar a documentação do swagger.
    * Aperfeiçoamento das práticas de modelagem do projeto.
    * Melhorar cobertura de teste.
 
 
 * Contato
-
-**Kayque Almeida Piton**  
-**Email:** [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
-**LinkedIn:** [Kayque Almeida Piton](https://www.linkedin.com/in/kayquepiton/)
+   **Kayque Almeida Piton**  
+   **Email:** [kayquepiton@gmail.com](mailto:kayquepiton@gmail.com)  
+   **LinkedIn:** [Kayque Almeida Piton](https://www.linkedin.com/in/kayquepiton/)
