@@ -89,7 +89,7 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 **6. Acesse Swagger para testar endpoints:**
    - Abra seu navegador da web e digite o endereço local onde a aplicação está sendo executada
-   `/swagger`, por exemplo: `https://localhost:{port}/swagger/index.html`.
+   s, por exemplo: `https://localhost:{port}/index.html`.
 
 ## Endpoints da API
 
