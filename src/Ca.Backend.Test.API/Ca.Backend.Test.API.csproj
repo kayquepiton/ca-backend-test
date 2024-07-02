@@ -20,4 +20,11 @@
     <ProjectReference Include="..\Ca.Backend.Test.Infra.IoC\Ca.Backend.Test.Infra.IoC.csproj" />
   </ItemGroup>
 
+  <!-- SWAGGER XML COMMENTS -->
+	<PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+	<!---->
+
 </Project>
