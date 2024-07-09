@@ -45,7 +45,7 @@ public class BillingController : ControllerBase
     ///        "invoiceNumber": "INV-001",
     ///        "date": "2024-07-02T03:43:17.495Z",
     ///        "dueDate": "2024-07-02T03:43:17.495Z",
-    ///        "totalAmount": 150.75,
+    ///        "totalAmount": 150.00,
     ///        "currency": "USD",
     ///        "lines": [
     ///            {

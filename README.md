@@ -37,19 +37,13 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 #### Bibliotecas de Apoio e Extensões
    * Microsoft.AspNetCore.OpenApi 8.0.4
    * Microsoft.Extensions.Http 8.0.0
-   * Microsoft.Extensions.Configuration.Abstractions 8.0.0
-   * Microsoft.Extensions.DependencyInjection.Abstractions 8.0.1
 
 #### Ferramentas de Teste e Cobertura
    * coverlet.collector 6.0.2
    * coverlet.msbuild 6.0.2
    * FluentAssertions 6.12.0
-   * Microsoft.AspNetCore.Mvc.Testing 8.0.6
    * Microsoft.NET.Test.Sdk 17.8.0
    * Moq 4.20.70
-   * NSubstitute 5.1.0
-   * NUnit 4.1.0
-   * NUnit3TestAdapter 4.5.0
    * xunit 2.8.1
    * xunit.runner.visualstudio 2.8.0
 

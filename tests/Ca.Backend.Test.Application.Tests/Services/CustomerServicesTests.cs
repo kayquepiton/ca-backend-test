@@ -8,10 +8,13 @@ using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
-using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Ca.Backend.Test.Application.Tests.Services;
-[TestFixture]
 public class CustomerServicesTests
 {
     private ICustomerServices _customerService;
@@ -19,8 +22,7 @@ public class CustomerServicesTests
     private IMapper _mapper;
     private Mock<IValidator<CustomerRequest>> _mockValidator;
 
-    [SetUp]
-    public void Setup()
+    public CustomerServicesTests()
     {
         _mockRepository = new Mock<IGenericRepository<CustomerEntity>>();
         _mockValidator = new Mock<IValidator<CustomerRequest>>();
@@ -33,7 +35,7 @@ public class CustomerServicesTests
         _customerService = new CustomerServices(_mockRepository.Object, _mapper, _mockValidator.Object);
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_ValidCustomerRequest_ReturnsCustomerResponse()
     {
         // Arrange
@@ -69,11 +71,11 @@ public class CustomerServicesTests
         result.Address.Should().Be(customerRequest.Address);
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_InvalidCustomerRequest_ThrowsValidationException()
     {
         // Arrange
-        var customerRequest = new CustomerRequest(); 
+        var customerRequest = new CustomerRequest();
 
         var validationResult = new FluentValidation.Results.ValidationResult();
         validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("Name", "Name is required"));
@@ -87,7 +89,7 @@ public class CustomerServicesTests
         await action.Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_ExistingCustomerId_ReturnsCustomerResponse()
     {
         // Arrange
@@ -114,7 +116,7 @@ public class CustomerServicesTests
         result.Address.Should().Be(existingCustomerEntity.Address);
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_NonExistingCustomerId_ThrowsApplicationException()
     {
         // Arrange
@@ -131,7 +133,7 @@ public class CustomerServicesTests
             .WithMessage($"Customer with ID {customerId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_ReturnsAllCustomers()
     {
         // Arrange
@@ -153,7 +155,7 @@ public class CustomerServicesTests
         result.Last().Name.Should().Be("Jane Doe");
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_NoCustomers_ReturnsEmptyList()
     {
         // Arrange
@@ -167,7 +169,7 @@ public class CustomerServicesTests
         result.Should().BeEmpty();
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_ValidCustomerRequest_ReturnsUpdatedCustomerResponse()
     {
         // Arrange
@@ -215,7 +217,7 @@ public class CustomerServicesTests
         result.Address.Should().Be(customerRequest.Address);
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_NonExistingCustomerId_ThrowsApplicationException()
     {
         // Arrange
@@ -241,7 +243,7 @@ public class CustomerServicesTests
             .WithMessage($"Customer with ID {customerId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_ExistingCustomerId_CallsRepositoryDelete()
     {
         // Arrange
@@ -264,7 +266,7 @@ public class CustomerServicesTests
         _mockRepository.Verify(r => r.DeleteByIdAsync(customerId), Times.Once);
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_NonExistingCustomerId_ThrowsApplicationException()
     {
         // Arrange

@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using AutoMapper;
 using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Application.Models.Request;
@@ -8,22 +13,20 @@ using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
-using NUnit.Framework;
+using Xunit;
 
 namespace Ca.Backend.Test.Application.Tests.Services;
-[TestFixture]
 public class BillingServicesTests
 {
-    private IBillingServices _billingService;
-    private Mock<IGenericRepository<BillingEntity>> _mockRepository;
-    private Mock<IGenericRepository<CustomerEntity>> _mockCustomerRepository;
-    private Mock<IGenericRepository<ProductEntity>> _mockProductRepository;
-    private IMapper _mapper;
-    private Mock<IValidator<BillingRequest>> _mockValidator;
-    private Mock<HttpClient> _mockHttpClient;
+    private readonly IBillingServices _billingService;
+    private readonly Mock<IGenericRepository<BillingEntity>> _mockRepository;
+    private readonly Mock<IGenericRepository<CustomerEntity>> _mockCustomerRepository;
+    private readonly Mock<IGenericRepository<ProductEntity>> _mockProductRepository;
+    private readonly IMapper _mapper;
+    private readonly Mock<IValidator<BillingRequest>> _mockValidator;
+    private readonly Mock<HttpClient> _mockHttpClient;
 
-    [SetUp]
-    public void Setup()
+    public BillingServicesTests()
     {
         _mockRepository = new Mock<IGenericRepository<BillingEntity>>();
         _mockCustomerRepository = new Mock<IGenericRepository<CustomerEntity>>();
@@ -47,7 +50,7 @@ public class BillingServicesTests
         );
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_ValidBillingRequest_ReturnsBillingResponse()
     {
         // Arrange
@@ -117,16 +120,16 @@ public class BillingServicesTests
         result.Currency.Should().Be(billingRequest.Currency);
         result.Lines.Should().HaveCount(1);
         result.Lines[0].ProductId.Should().Be(productId);
-        result.Lines[0].Quantity.Should().Be(1); 
-        result.Lines[0].UnitPrice.Should().Be(100); 
-        result.Lines[0].Subtotal.Should().Be(100); 
+        result.Lines[0].Quantity.Should().Be(1);
+        result.Lines[0].UnitPrice.Should().Be(100);
+        result.Lines[0].Subtotal.Should().Be(100);
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_InvalidBillingRequest_ThrowsValidationException()
     {
         // Arrange
-        var billingRequest = new BillingRequest(); 
+        var billingRequest = new BillingRequest();
 
         var validationResult = new FluentValidation.Results.ValidationResult();
         validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("CustomerId", "Customer ID is required"));
@@ -140,16 +143,12 @@ public class BillingServicesTests
         await action.Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_ExistingBillingId_ReturnsBillingResponse()
     {
         // Arrange
         var billingId = Guid.NewGuid();
         var productId = Guid.NewGuid();
-        var productRequest = new ProductRequest
-        {
-            Description = "Test Product"
-        };
 
         var existingBillingEntity = new BillingEntity
         {
@@ -186,7 +185,7 @@ public class BillingServicesTests
         result.Lines.Should().HaveCount(1);
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_NonExistingBillingId_ThrowsApplicationException()
     {
         // Arrange
@@ -203,7 +202,7 @@ public class BillingServicesTests
             .WithMessage($"Billing with ID {billingId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_ReturnsAllBillings()
     {
         // Arrange
@@ -225,7 +224,7 @@ public class BillingServicesTests
         result.Last().TotalAmount.Should().Be(200);
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_NoBillings_ReturnsEmptyList()
     {
         // Arrange
@@ -239,16 +238,12 @@ public class BillingServicesTests
         result.Should().BeEmpty();
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_ValidBillingRequest_ReturnsUpdatedBillingResponse()
     {
         // Arrange
         var billingId = Guid.NewGuid();
         var productId = Guid.NewGuid();
-        var productRequest = new ProductRequest
-        {
-            Description = "Updated Product"
-        };
 
         var billingRequest = new BillingRequest
         {
@@ -331,7 +326,7 @@ public class BillingServicesTests
         result.Lines.Should().HaveCount(1);
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_NonExistingBillingId_ThrowsApplicationException()
     {
         // Arrange
@@ -369,7 +364,7 @@ public class BillingServicesTests
             .WithMessage($"Billing with ID {billingId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_ExistingBillingId_CallsRepositoryDelete()
     {
         // Arrange
@@ -392,7 +387,7 @@ public class BillingServicesTests
         _mockRepository.Verify(r => r.DeleteByIdAsync(billingId), Times.Once);
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_NonExistingBillingId_ThrowsApplicationException()
     {
         // Arrange

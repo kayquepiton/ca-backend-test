@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Services;
 using Ca.Backend.Test.Application.Services.Interfaces;
@@ -33,7 +32,6 @@ public static class IoCServiceExtension
         services.AddScoped<IValidator<ProductRequest>, ProductRequestValidator>();
         services.AddScoped<IValidator<CustomerRequest>, CustomerRequestValidator>();
         services.AddScoped<IValidator<BillingRequest>, BillingRequestValidator>();
-        //services.AddScoped<IValidator<BillingLineRequest>, BillingLineRequestValidator>();
 
     }
 
