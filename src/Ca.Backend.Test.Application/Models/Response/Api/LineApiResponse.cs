@@ -13,9 +13,9 @@ public class LineApiResponse
     public int Quantity { get; set; }
 
     [JsonPropertyName("unit_price")]
-    public int UnitPrice { get; set; }
+    public decimal UnitPrice { get; set; }
 
     [JsonPropertyName("subtotal")]
-    public int Subtotal { get; set; }
+    public decimal Subtotal { get; set; }
 }
 

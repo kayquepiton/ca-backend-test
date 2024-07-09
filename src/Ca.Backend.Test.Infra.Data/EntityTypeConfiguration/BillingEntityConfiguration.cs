@@ -14,6 +14,9 @@ public class BillingEntityConfiguration : IEntityTypeConfiguration<BillingEntity
         builder.Property(b => b.Id)
             .IsRequired();
 
+        builder.Property(b => b.CustomerId)
+            .IsRequired();
+
         builder.Property(b => b.InvoiceNumber)
             .IsRequired()
             .HasMaxLength(50);

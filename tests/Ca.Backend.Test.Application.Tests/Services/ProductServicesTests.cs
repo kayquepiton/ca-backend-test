@@ -1,6 +1,7 @@
 using AutoMapper;
 using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Application.Models.Request;
+using Ca.Backend.Test.Application.Models.Response;
 using Ca.Backend.Test.Application.Services;
 using Ca.Backend.Test.Application.Services.Interfaces;
 using Ca.Backend.Test.Domain.Entities;
@@ -8,10 +9,13 @@ using Ca.Backend.Test.Infra.Data.Repository.Interfaces;
 using FluentAssertions;
 using FluentValidation;
 using Moq;
-using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Ca.Backend.Test.Application.Tests.Services;
-[TestFixture]
 public class ProductServicesTests
 {
     private IProductServices _productService;
@@ -19,8 +23,7 @@ public class ProductServicesTests
     private IMapper _mapper;
     private Mock<IValidator<ProductRequest>> _mockValidator;
 
-    [SetUp]
-    public void Setup()
+    public ProductServicesTests()
     {
         _mockRepository = new Mock<IGenericRepository<ProductEntity>>();
         _mockValidator = new Mock<IValidator<ProductRequest>>();
@@ -33,7 +36,7 @@ public class ProductServicesTests
         _productService = new ProductServices(_mockRepository.Object, _mapper, _mockValidator.Object);
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_ValidProductRequest_ReturnsProductResponse()
     {
         // Arrange
@@ -63,11 +66,11 @@ public class ProductServicesTests
         result.Description.Should().Be(productRequest.Description);
     }
 
-    [Test]
+    [Fact]
     public async Task CreateAsync_InvalidProductRequest_ThrowsValidationException()
     {
         // Arrange
-        var productRequest = new ProductRequest(); 
+        var productRequest = new ProductRequest();
 
         var validationResult = new FluentValidation.Results.ValidationResult();
         validationResult.Errors.Add(new FluentValidation.Results.ValidationFailure("Description", "Description is required"));
@@ -81,7 +84,7 @@ public class ProductServicesTests
         await action.Should().ThrowAsync<ValidationException>();
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_ExistingProductId_ReturnsProductResponse()
     {
         // Arrange
@@ -104,7 +107,7 @@ public class ProductServicesTests
         result.Description.Should().Be(existingProductEntity.Description);
     }
 
-    [Test]
+    [Fact]
     public async Task GetByIdAsync_NonExistingProductId_ThrowsApplicationException()
     {
         // Arrange
@@ -121,7 +124,7 @@ public class ProductServicesTests
             .WithMessage($"Product with ID {productId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_ReturnsAllProducts()
     {
         // Arrange
@@ -139,11 +142,11 @@ public class ProductServicesTests
 
         // Assert
         result.Should().HaveCount(2);
-        result.First().Description.Should().Be("Product 1");
-        result.Last().Description.Should().Be("Product 2");
+        result.Should().ContainSingle(p => p.Description == "Product 1");
+        result.Should().ContainSingle(p => p.Description == "Product 2");
     }
 
-    [Test]
+    [Fact]
     public async Task GetAllAsync_NoProducts_ReturnsEmptyList()
     {
         // Arrange
@@ -157,7 +160,7 @@ public class ProductServicesTests
         result.Should().BeEmpty();
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_ValidProductRequest_ReturnsUpdatedProductResponse()
     {
         // Arrange
@@ -197,7 +200,7 @@ public class ProductServicesTests
         result.Description.Should().Be(productRequest.Description);
     }
 
-    [Test]
+    [Fact]
     public async Task UpdateAsync_NonExistingProductId_ThrowsApplicationException()
     {
         // Arrange
@@ -221,7 +224,7 @@ public class ProductServicesTests
             .WithMessage($"Product with ID {productId} not found.");
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_ExistingProductId_CallsRepositoryDelete()
     {
         // Arrange
@@ -242,7 +245,7 @@ public class ProductServicesTests
         _mockRepository.Verify(r => r.DeleteByIdAsync(productId), Times.Once);
     }
 
-    [Test]
+    [Fact]
     public async Task DeleteByIdAsync_NonExistingProductId_ThrowsApplicationException()
     {
         // Arrange
@@ -259,3 +262,4 @@ public class ProductServicesTests
             .WithMessage($"Product with ID {productId} not found.");
     }
 }
+

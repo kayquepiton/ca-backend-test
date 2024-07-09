@@ -11,13 +11,13 @@ public class BillingApiResponse
     public CustomerApiResponse Customer { get; set; }
 
     [JsonPropertyName("date")]
-    public string Date { get; set; }
+    public DateTime Date { get; set; }
 
     [JsonPropertyName("due_date")]
-    public string DueDate { get; set; }
+    public DateTime DueDate { get; set; }
 
     [JsonPropertyName("total_amount")]
-    public int TotalAmount { get; set; }
+    public decimal TotalAmount { get; set; }
 
     [JsonPropertyName("currency")]
     public string Currency { get; set; }
