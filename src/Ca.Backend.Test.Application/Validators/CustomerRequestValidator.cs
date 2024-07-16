@@ -13,11 +13,11 @@ public class CustomerRequestValidator : AbstractValidator<CustomerRequest>
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email is required.")
             .EmailAddress().WithMessage("Invalid email address.")
-            .MaximumLength(255).WithMessage("Email cannot exceed 255 characters.");
+            .MaximumLength(100).WithMessage("Email cannot exceed 100 characters.");
 
         RuleFor(x => x.Address)
             .NotEmpty().WithMessage("Address is required.")
-            .MaximumLength(500).WithMessage("Address cannot exceed 500 characters.");
+            .MaximumLength(100).WithMessage("Address cannot exceed 100 characters.");
     }
 }
 

@@ -7,12 +7,12 @@ public class CustomerApiResponse
     public Guid Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("email")]
-    public string Email { get; set; }
+    public string? Email { get; set; }
 
     [JsonPropertyName("address")]
-    public string Address { get; set; }
+    public string? Address { get; set; }
 }
 

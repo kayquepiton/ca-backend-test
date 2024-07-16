@@ -244,10 +244,11 @@ public class BillingServicesTests
         // Arrange
         var billingId = Guid.NewGuid();
         var productId = Guid.NewGuid();
+        var customerId = Guid.NewGuid();
 
         var billingRequest = new BillingRequest
         {
-            CustomerId = Guid.NewGuid(),
+            CustomerId = customerId,
             Date = DateTime.UtcNow,
             DueDate = DateTime.UtcNow.AddDays(30),
             TotalAmount = 150,
@@ -267,10 +268,27 @@ public class BillingServicesTests
         _mockValidator.Setup(v => v.ValidateAsync(billingRequest, default))
             .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
+        // Mock existing customer entity
+        var existingCustomerEntity = new CustomerEntity
+        {
+            Id = customerId // Ensure this matches billingRequest.CustomerId
+        };
+        _mockCustomerRepository.Setup(r => r.GetByIdAsync(customerId))
+            .ReturnsAsync(existingCustomerEntity);
+
+        // Mock existing product entity
+        var existingProductEntity = new ProductEntity
+        {
+            Id = productId,
+            Description = "Test Product"
+        };
+        _mockProductRepository.Setup(r => r.GetByIdAsync(productId))
+            .ReturnsAsync(existingProductEntity);
+
         var existingBillingEntity = new BillingEntity
         {
             Id = billingId,
-            CustomerId = Guid.NewGuid(),
+            CustomerId = customerId,
             Date = DateTime.UtcNow,
             DueDate = DateTime.UtcNow.AddDays(30),
             TotalAmount = 100,
@@ -324,7 +342,16 @@ public class BillingServicesTests
         result.TotalAmount.Should().Be(billingRequest.TotalAmount);
         result.Currency.Should().Be(billingRequest.Currency);
         result.Lines.Should().HaveCount(1);
+        result.Lines[0].ProductId.Should().Be(productId);
+        result.Lines[0].Quantity.Should().Be(2);
+        result.Lines[0].UnitPrice.Should().Be(75); 
+        result.Lines[0].Subtotal.Should().Be(150); 
+
+        // Verify mocks
+        _mockCustomerRepository.Verify(r => r.GetByIdAsync(customerId), Times.Once);
+        _mockProductRepository.Verify(r => r.GetByIdAsync(productId), Times.Once);
     }
+
 
     [Fact]
     public async Task UpdateAsync_NonExistingBillingId_ThrowsApplicationException()

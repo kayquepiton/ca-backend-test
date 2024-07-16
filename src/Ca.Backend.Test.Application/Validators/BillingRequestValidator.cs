@@ -6,6 +6,9 @@ public class BillingRequestValidator : AbstractValidator<BillingRequest>
 {
     public BillingRequestValidator()
     {
+        RuleFor(b => b.CustomerId)
+            .NotEmpty().WithMessage("Customer id is required.");
+            
         RuleFor(x => x.InvoiceNumber)
             .NotEmpty().WithMessage("Invoice number is required.")
             .MaximumLength(50).WithMessage("Invoice number cannot exceed 50 characters.");

@@ -20,10 +20,10 @@ public class CustomerEntityConfiguration : IEntityTypeConfiguration<CustomerEnti
 
         builder.Property(c => c.Email)
             .IsRequired()
-            .HasMaxLength(255); 
+            .HasMaxLength(100); 
 
         builder.Property(c => c.Address)
             .IsRequired()
-            .HasMaxLength(500);
+            .HasMaxLength(100);
     }
 }

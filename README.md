@@ -27,15 +27,16 @@ Este projeto é uma API REST desenvolvida em .NET 8.0 para gerenciar o faturamen
 
 #### Frameworks Principais
    * .NET 8.0
-   * Entity Framework Core 8.0.4
+   * Entity Framework Core 8.0.7
    * MySQL com Pomelo.EntityFrameworkCore.MySql 8.0.2
+   * Microsoft.EntityFrameworkCore.Design 8.0.7
    * AutoMapper 13.0.1
-   * FluentValidation 8.2.1
-   * Refit 7.1.1
-   * Swagger com Swashbuckle.AspNetCore 6.4.0
+   * FluentValidation 11.9.2
+   * Refit 7.1.2
+   * Swagger com Swashbuckle.AspNetCore 6.6.2
 
 #### Bibliotecas de Apoio e Extensões
-   * Microsoft.AspNetCore.OpenApi 8.0.4
+   * Microsoft.AspNetCore.OpenApi 8.0.7
    * Microsoft.Extensions.Http 8.0.0
 
 #### Ferramentas de Teste e Cobertura
