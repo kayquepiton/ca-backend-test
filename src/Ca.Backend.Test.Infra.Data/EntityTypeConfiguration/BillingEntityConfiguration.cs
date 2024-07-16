@@ -31,7 +31,8 @@ public class BillingEntityConfiguration : IEntityTypeConfiguration<BillingEntity
             .IsRequired();
 
         builder.Property(b => b.TotalAmount)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("decimal(18,2)");
 
         builder.Property(b => b.Currency)
             .IsRequired()
