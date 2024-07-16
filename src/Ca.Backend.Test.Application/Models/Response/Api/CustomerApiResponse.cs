@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Ca.Backend.Test.Application.Models.Responses.Api;
+namespace Ca.Backend.Test.Application.Models.Response.Api;
 public class CustomerApiResponse
 {
     [JsonPropertyName("id")]

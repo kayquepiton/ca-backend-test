@@ -2,7 +2,7 @@ using System.Text.Json;
 using AutoMapper;
 using Ca.Backend.Test.Application.Models.Request;
 using Ca.Backend.Test.Application.Models.Response;
-using Ca.Backend.Test.Application.Models.Responses.Api;
+using Ca.Backend.Test.Application.Models.Response.Api;
 using Ca.Backend.Test.Application.Services.Interfaces;
 using Ca.Backend.Test.Domain.Entities;
 using Ca.Backend.Test.Infra.Data.Repository.Interfaces;

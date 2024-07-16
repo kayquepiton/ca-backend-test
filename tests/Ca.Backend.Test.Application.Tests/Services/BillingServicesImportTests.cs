@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Application.Models.Request;
-using Ca.Backend.Test.Application.Models.Responses.Api;
+using Ca.Backend.Test.Application.Models.Response.Api;
 using Ca.Backend.Test.Application.Services;
 using Ca.Backend.Test.Application.Services.Interfaces;
 using Ca.Backend.Test.Domain.Entities;
