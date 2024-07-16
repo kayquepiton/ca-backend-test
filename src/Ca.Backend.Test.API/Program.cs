@@ -2,7 +2,6 @@ using System.Reflection;
 using Ca.Backend.Test.API.Middlewares;
 using Ca.Backend.Test.Application.Mappings;
 using Ca.Backend.Test.Infra.IoC;
-using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 

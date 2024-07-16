@@ -70,7 +70,6 @@ public class BillingServices : IBillingServices
         return billingData;
     }
 
-
     public async Task<BillingResponse> CreateAsync(BillingRequest billingRequest)
     {
         var validationResult = await _billingRequestValidator.ValidateAsync(billingRequest);
@@ -128,6 +127,10 @@ public class BillingServices : IBillingServices
         var billingEntity = await _repository.GetByIdAsync(id);
         if (billingEntity is null)
             throw new ApplicationException($"Billing with ID {id} not found.");
+
+        await VerifyCustomerExistsAsync(billingRequest.CustomerId);
+
+        await VerifyProductsExistsAsync(billingRequest.Lines.Select(l => l.ProductId));
 
         _mapper.Map(billingRequest, billingEntity);
         billingEntity = await _repository.UpdateAsync(billingEntity);

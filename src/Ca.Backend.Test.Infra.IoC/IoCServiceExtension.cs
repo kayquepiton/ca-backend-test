@@ -22,7 +22,7 @@ public static class IoCServiceExtension
         services.AddScoped<IGenericRepository<CustomerEntity>, GenericRepository<CustomerEntity>>();
         services.AddScoped<IGenericRepository<CustomerEntity>, GenericRepository<CustomerEntity>>();
         services.AddScoped<IGenericRepository<ProductEntity>, GenericRepository<ProductEntity>>();
-        services.AddScoped<IGenericRepository<BillingEntity>, GenericRepository<BillingEntity>>();
+        services.AddScoped<IGenericRepository<BillingEntity>, BillingRepository>();
         services.AddScoped<IGenericRepository<BillingLineEntity>, GenericRepository<BillingLineEntity>>();
         
         services.AddScoped<ICustomerServices, CustomerServices>();

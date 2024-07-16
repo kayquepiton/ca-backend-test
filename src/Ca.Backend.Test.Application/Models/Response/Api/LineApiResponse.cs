@@ -7,7 +7,7 @@ public class LineApiResponse
     public Guid ProductId { get; set; }
 
     [JsonPropertyName("description")]
-    public string Description { get; set; }
+    public string? Description { get; set; }
 
     [JsonPropertyName("quantity")]
     public int Quantity { get; set; }

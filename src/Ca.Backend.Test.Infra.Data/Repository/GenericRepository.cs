@@ -6,7 +6,7 @@ namespace Ca.Backend.Test.Infra.Data.Repository;
 public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
 {
     private readonly ApplicationDbContext _context;
-    private readonly DbSet<TEntity> _dbSet;
+    protected readonly DbSet<TEntity> _dbSet;
 
     public GenericRepository(ApplicationDbContext context)
     {
@@ -26,7 +26,7 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
         return await _dbSet.SingleOrDefaultAsync(entity => entity.Id.Equals(id));
     }
 
-    public async Task<IList<TEntity>> GetAllAsync()
+    public virtual async Task<IList<TEntity>> GetAllAsync()
     {
         return await _dbSet.ToListAsync();
     }
