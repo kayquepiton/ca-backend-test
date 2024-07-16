@@ -24,10 +24,12 @@ public class BillingLineEntityConfiguration : IEntityTypeConfiguration<BillingLi
             .IsRequired();
 
         builder.Property(bl => bl.UnitPrice)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("decimal(18,2)");
 
         builder.Property(bl => bl.Subtotal)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("decimal(18,2)");
 
         builder.HasOne(bl => bl.Billing)
             .WithMany(b => b.Lines)
