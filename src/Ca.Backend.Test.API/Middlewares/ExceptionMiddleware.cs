@@ -62,7 +62,7 @@ public class ExceptionMiddleware
             var response = new GenericHttpResponse<object>
             {
                 Errors = new[] { "An unexpected error occurred." },
-                StatusCode = StatusCodes.Status500InternalServerError,
+                StatusCode = StatusCodes.Status400BadRequest,
                 Data = null
             };
 
